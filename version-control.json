@@ -9,21 +9,21 @@
   "download_url": "https://github.com/ZumeProject/zume-coaching-checklist/releases/latest/download/zume-coaching-checklist.zip",
   "homepage": "https://github.com/ZumeProject/zume-coaching-checklist",
   "issues_url": "https://github.com/ZumeProject/zume-coaching-checklist/issues",
-  "projects_url": "https://github.com/ZumeProject/zume-coaching-checklist/projects/1",
+  "projects_url": "",
   "discussions_url": "https://github.com/ZumeProject/zume-coaching-checklist/discussions",
-  "wiki_url": "https://github.com/ZumeProject/zume-coaching-checklist/wiki",
+  "wiki_url": "",
   "license_url": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/LICENSE",
   "readme_url": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/README.md",
   "requires": "4.7",
-  "tested": "5.6",
+  "tested": "5.8",
   "upgrade_notice": "Upgrade to get the latest features.",
   "banners": {
-    "low": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/coaching-checklist-banner.png",
-    "high": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/coaching-checklist-banner.png"
+    "low": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/zume-coaching-checklist-banner.png",
+    "high": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/zume-coaching-checklist-banner.png"
   },
-  "icon": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/coaching-checklist-icon.png",
+  "icon": "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/zume-coaching-checklist-icon.png",
   "sections": {
-    "description": "A tile which has the core Zume Training concepts in a HOST trackable form.",
+    "description": "Zúme - Coaching Checklist add a tile to contacts for tracking Hearing, Obeying, Sharing, Training competence of Zúme concepts",
     "installation": "(Required) You must have Disciple.Tools Theme installed before using this plugin. Once Disciple.Tools is installed, you can use the normal Plugin system to install the plugin.",
     "changelog": ""
   }
