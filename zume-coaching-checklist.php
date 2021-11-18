@@ -75,6 +75,7 @@ class Zume_Coaching_Checklist {
 
     private function __construct() {
         require_once( 'tile/custom-tile.php' ); // add custom tile
+        require_once( 'magic-link/magic-link-post-type.php' );
 
         /**
          * To remove: delete the line below and remove the folder named /languages

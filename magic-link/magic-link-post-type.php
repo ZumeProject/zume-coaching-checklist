@@ -3,16 +3,16 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Disciple_Tools_Plugin_Starter_Template_Magic_Link
+ * Class Zume_Coaching_Checklist_Magic_Link
  */
-class Disciple_Tools_Plugin_Starter_Template_Magic_Link extends DT_Magic_Url_Base {
+class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
 
     public $magic = false;
     public $parts = false;
-    public $page_title = 'Magic';
-    public $root = "magic_app"; // @todo define the root of the url {yoursite}/root/type/key/action
-    public $type = 'magic_type'; // @todo define the type
-    public $post_type = 'starter_post_type'; // @todo set the post type this magic link connects with.
+    public $page_title = 'Zúme Coaching Checklist';
+    public $root = "zume_app";
+    public $type = 'coaching_checklist';
+    public $post_type = 'contacts'; // @todo set the post type this magic link connects with.
     private $meta_key = '';
 
     private static $_instance = null;
@@ -73,9 +73,9 @@ class Disciple_Tools_Plugin_Starter_Template_Magic_Link extends DT_Magic_Url_Bas
      */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ) {
         if ( $post_type === $this->post_type ){
-            $tiles["dt_starters_magic_url"] = [
-                "label" => __( "Magic Url", 'disciple-tools-plugin-starter-template' ),
-                "description" => "The Magic URL sets up a page accessible without authentication, only the link is needed. Useful for small applications liked to this record, like quick surveys or updates."
+            $tiles["apps"] = [
+                "label" => __( "Apps", 'zume-coaching-checklist' ),
+                "description" => "This tile contains magic link apps and survey tools."
             ];
         }
         return $tiles;
@@ -83,7 +83,7 @@ class Disciple_Tools_Plugin_Starter_Template_Magic_Link extends DT_Magic_Url_Bas
     public function dt_details_additional_section( $section, $post_type ) {
         // test if campaigns post type and campaigns_app_module enabled
         if ( $post_type === $this->post_type ) {
-            if ( 'dt_starters_magic_url' === $section ) {
+            if ( 'apps' === $section ) {
                 $record = DT_Posts::get_post( $post_type, get_the_ID() );
                 if ( isset( $record[$this->meta_key] ) ) {
                     $key = $record[$this->meta_key];
@@ -94,7 +94,7 @@ class Disciple_Tools_Plugin_Starter_Template_Magic_Link extends DT_Magic_Url_Bas
                 $link = DT_Magic_URL::get_link_url( $this->root, $this->type, $key )
                 ?>
                 <p>See help <img class="dt-icon" src="<?php echo esc_html( get_template_directory_uri() . '/dt-assets/images/help.svg' ) ?>"/> for description.</p>
-                <a class="button" href="<?php echo esc_html( $link ); ?>" target="_blank">Open magic link</a>
+                <a class="button" href="<?php echo esc_html( $link ); ?>" target="_blank">Open Coaching Checklist</a>
                 <?php
             }
         }
@@ -352,4 +352,4 @@ class Disciple_Tools_Plugin_Starter_Template_Magic_Link extends DT_Magic_Url_Bas
         return $data;
     }
 }
-Disciple_Tools_Plugin_Starter_Template_Magic_Link::instance();
+Zume_Coaching_Checklist_Magic_Link::instance();
