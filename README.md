@@ -13,3 +13,4 @@ https://zume.training/coaching-checklist/
 ![list](https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/images/tile.png)
 
 
+[![Build Status](https://travis-ci.com/ZumeProject/zume-coaching-checklist.svg?branch=master)](https://travis-ci.com/ZumeProject/zume-coaching-checklist)
