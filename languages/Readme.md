@@ -2,4 +2,4 @@
 {translation-domain}-{localisation}.po
 
 ex:
-dt-coaching-checklist-fr_FR.po
+zume-coaching-checklist-fr_FR.po

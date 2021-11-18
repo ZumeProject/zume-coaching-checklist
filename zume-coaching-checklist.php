@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Disciple.Tools - Coaching Checklist
- * Plugin URI: https://github.com/DiscipleTools/disciple-tools-coaching-checklist
- * Description: Disciple.Tools - Coaching Checklist is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
- * Text Domain: disciple-tools-coaching-checklist
+ * Plugin Name: Zúme - Coaching Checklist
+ * Plugin URI: https://github.com/ZumeProject/zume-coaching-checklist
+ * Description: Zúme - Coaching Checklist add a tile to contacts for tracking Hearing, Obeying, Sharing, Training competence of Zúme concepts
+ * Text Domain: zume-coaching-checklist
  * Domain Path: /languages
- * Version:  v0.1.3
+ * Version:  0.1
  * Author URI: https://github.com/DiscipleTools
- * GitHub Plugin URI: https://github.com/DiscipleTools/disciple-tools-coaching-checklist
+ * GitHub Plugin URI: https://github.com/ZumeProject/zume-coaching-checklist
  * Requires at least: 4.7.0
  * (Requires 4.7+ because of the integration of the REST API at 4.7 and the security requirements of this milestone version.)
  * Tested up to: 5.6
@@ -23,14 +23,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gets the instance of the `DT_Coaching_Checklist` class.
+ * Gets the instance of the `Zume_Coaching_Checklist` class.
  *
  * @since  0.1
  * @access public
  * @return object|bool
  */
-function dt_coaching_checklist() {
-    $dt_coaching_checklist_required_dt_theme_version = '1.0';
+function zume_coaching_checklist() {
+    $zume_coaching_checklist_required_dt_theme_version = '1.0';
     $wp_theme = wp_get_theme();
     $version = $wp_theme->version;
 
@@ -38,8 +38,8 @@ function dt_coaching_checklist() {
      * Check if the Disciple.Tools theme is loaded and is the latest required version
      */
     $is_theme_dt = class_exists( "Disciple_Tools" );
-    if ( $is_theme_dt && version_compare( $version, $dt_coaching_checklist_required_dt_theme_version, "<" ) ) {
-        add_action( 'admin_notices', 'dt_coaching_checklist_hook_admin_notice' );
+    if ( $is_theme_dt && version_compare( $version, $zume_coaching_checklist_required_dt_theme_version, "<" ) ) {
+        add_action( 'admin_notices', 'zume_coaching_checklist_hook_admin_notice' );
         add_action( 'wp_ajax_dismissed_notice_handler', 'dt_hook_ajax_notice_handler' );
         return false;
     }
@@ -53,9 +53,9 @@ function dt_coaching_checklist() {
         require_once get_template_directory() . '/dt-core/global-functions.php';
     }
 
-    return DT_Coaching_Checklist::instance();
+    return Zume_Coaching_Checklist::instance();
 }
-add_action( 'after_setup_theme', 'dt_coaching_checklist', 20 );
+add_action( 'after_setup_theme', 'zume_coaching_checklist', 20 );
 
 /**
  * Singleton class for setting up the plugin.
@@ -63,7 +63,7 @@ add_action( 'after_setup_theme', 'dt_coaching_checklist', 20 );
  * @since  0.1
  * @access public
  */
-class DT_Coaching_Checklist {
+class Zume_Coaching_Checklist {
 
     private static $_instance = null;
     public static function instance() {
@@ -100,7 +100,7 @@ class DT_Coaching_Checklist {
      * @return void
      */
     public static function deactivation() {
-        delete_option( 'dismissed-dt-coaching-checklist' );
+        delete_option( 'dismissed-zume-coaching-checklist' );
     }
 
     /**
@@ -111,7 +111,7 @@ class DT_Coaching_Checklist {
      * @return void
      */
     public function i18n() {
-        $domain = 'disciple-tools-coaching-checklist'; // this must be the same as the slug for the plugin
+        $domain = 'zume-coaching-checklist'; // this must be the same as the slug for the plugin
         load_plugin_textdomain( $domain, false, trailingslashit( dirname( plugin_basename( __FILE__ ) ) ). 'languages' );
     }
 
@@ -123,7 +123,7 @@ class DT_Coaching_Checklist {
      * @return string
      */
     public function __toString() {
-        return 'disciple-tools-coaching-checklist';
+        return 'zume-coaching-checklist';
     }
 
     /**
@@ -158,7 +158,7 @@ class DT_Coaching_Checklist {
      * @access public
      */
     public function __call( $method = '', $args = array() ) {
-        _doing_it_wrong( "dt_coaching_checklist::" . esc_html( $method ), 'Method does not exist.', '0.1' );
+        _doing_it_wrong( "zume_coaching_checklist::" . esc_html( $method ), 'Method does not exist.', '0.1' );
         unset( $method, $args );
         return null;
     }
@@ -166,32 +166,32 @@ class DT_Coaching_Checklist {
 
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'DT_Coaching_Checklist', 'activation' ] );
-register_deactivation_hook( __FILE__, [ 'DT_Coaching_Checklist', 'deactivation' ] );
+register_activation_hook( __FILE__, [ 'Zume_Coaching_Checklist', 'activation' ] );
+register_deactivation_hook( __FILE__, [ 'Zume_Coaching_Checklist', 'deactivation' ] );
 
 
-if ( ! function_exists( 'dt_coaching_checklist_hook_admin_notice' ) ) {
-    function dt_coaching_checklist_hook_admin_notice() {
-        global $dt_coaching_checklist_required_dt_theme_version;
+if ( ! function_exists( 'zume_coaching_checklist_hook_admin_notice' ) ) {
+    function zume_coaching_checklist_hook_admin_notice() {
+        global $zume_coaching_checklist_required_dt_theme_version;
         $wp_theme = wp_get_theme();
         $current_version = $wp_theme->version;
         $message = "'Disciple.Tools - Coaching Checklist' plugin requires 'Disciple.Tools' theme to work. Please activate 'Disciple.Tools' theme or make sure it is latest version.";
         if ( $wp_theme->get_template() === "disciple-tools-theme" ){
-            $message .= ' ' . sprintf( esc_html( 'Current Disciple.Tools version: %1$s, required version: %2$s' ), esc_html( $current_version ), esc_html( $dt_coaching_checklist_required_dt_theme_version ) );
+            $message .= ' ' . sprintf( esc_html( 'Current Disciple.Tools version: %1$s, required version: %2$s' ), esc_html( $current_version ), esc_html( $zume_coaching_checklist_required_dt_theme_version ) );
         }
         // Check if it's been dismissed...
-        if ( ! get_option( 'dismissed-dt-coaching-checklist', false ) ) { ?>
-            <div class="notice notice-error notice-dt-coaching-checklist is-dismissible" data-notice="dt-coaching-checklist">
+        if ( ! get_option( 'dismissed-zume-coaching-checklist', false ) ) { ?>
+            <div class="notice notice-error notice-zume-coaching-checklist is-dismissible" data-notice="zume-coaching-checklist">
                 <p><?php echo esc_html( $message );?></p>
             </div>
             <script>
                 jQuery(function($) {
-                    $( document ).on( 'click', '.notice-dt-coaching-checklist .notice-dismiss', function () {
+                    $( document ).on( 'click', '.notice-zume-coaching-checklist .notice-dismiss', function () {
                         $.ajax( ajaxurl, {
                             type: 'POST',
                             data: {
                                 action: 'dismissed_notice_handler',
-                                type: 'dt-coaching-checklist',
+                                type: 'zume-coaching-checklist',
                                 security: '<?php echo esc_html( wp_create_nonce( 'wp_rest_dismiss' ) ) ?>'
                             }
                         })
@@ -235,12 +235,12 @@ add_action( 'plugins_loaded', function (){
             }
         }
         if ( class_exists( 'Puc_v4_Factory' ) ){
-            $hosted_json = "https://raw.githubusercontent.com/DiscipleTools/disciple-tools-coaching-checklist/master/version-control.json";
+            $hosted_json = "https://raw.githubusercontent.com/ZumeProject/zume-coaching-checklist/master/version-control.json";
 
             Puc_v4_Factory::buildUpdateChecker(
                 $hosted_json,
                 __FILE__,
-                'disciple-tools-coaching-checklist' // change this token
+                'zume-coaching-checklist' // change this token
             );
         }
     }

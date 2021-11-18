@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class DT_Coaching_Checklist_Tile
+class Zume_Coaching_Checklist_Tile
 {
     private static $_instance = null;
     public static function instance(){
@@ -26,7 +26,7 @@ class DT_Coaching_Checklist_Tile
      */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ) {
         if ( $post_type === "contacts" ){
-            $tiles["coaching_checklist"] = [ "label" => __( "Coaching Checklist", 'disciple-tools-coaching-checklist' ) ];
+            $tiles["coaching_checklist"] = [ "label" => __( "Coaching Checklist", 'zume-coaching-checklist' ) ];
         }
         return $tiles;
     }
@@ -39,69 +39,69 @@ class DT_Coaching_Checklist_Tile
     public function dt_custom_fields( array $fields, string $post_type = "" ) {
         if ( $post_type === "contacts" ){
             $options = [
-                "h" => [ "label" => _x( "H", "Coaching Checklist Initial for: Heard", 'disciple-tools-coaching-checklist' ) ],
-                "o" => [ "label" => _x( "O", "Coaching Checklist Initial for: Obeyed", 'disciple-tools-coaching-checklist' ) ],
-                "s" => [ "label" => _x( "S", "Coaching Checklist Initial for: Shared", 'disciple-tools-coaching-checklist' ) ],
-                "t" => [ "label" => _x( "T", "Coaching Checklist Initial for: Trained", 'disciple-tools-coaching-checklist' ) ],
+                "h" => [ "label" => _x( "H", "Coaching Checklist Initial for: Heard", 'zume-coaching-checklist' ) ],
+                "o" => [ "label" => _x( "O", "Coaching Checklist Initial for: Obeyed", 'zume-coaching-checklist' ) ],
+                "s" => [ "label" => _x( "S", "Coaching Checklist Initial for: Shared", 'zume-coaching-checklist' ) ],
+                "t" => [ "label" => _x( "T", "Coaching Checklist Initial for: Trained", 'zume-coaching-checklist' ) ],
             ];
 
             $coaching_checklist_items = [
 
                 /* session 1 */
 //                1 => [
-//                    'label' => _x( "God Uses Ordinary People", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+//                    'label' => _x( "God Uses Ordinary People", "coaching checklist", 'zume-coaching-checklist' ),
 //                    'description' => "You'll see how God uses ordinary people doing simple things to make a big impact.",
 //                    'url' => 'https://zume.training/god-uses-ordinary-people/'
 //                    ],
-                1 => _x( "God Uses Ordinary People", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                2 => _x( "Definition of Disciple & Church", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                3 => _x( "Breathing: Hearing & Obeying", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                4 => _x( "SOAPS Bible Reading", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                5 => _x( "Accountability Groups", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                1 => _x( "God Uses Ordinary People", "coaching checklist", 'zume-coaching-checklist' ),
+                2 => _x( "Definition of Disciple & Church", "coaching checklist", 'zume-coaching-checklist' ),
+                3 => _x( "Breathing: Hearing & Obeying", "coaching checklist", 'zume-coaching-checklist' ),
+                4 => _x( "SOAPS Bible Reading", "coaching checklist", 'zume-coaching-checklist' ),
+                5 => _x( "Accountability Groups", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 2 */
-                6 => _x( "Consumer vs Producer Lifestyle", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                7 => _x( "Prayer Wheel (Hour in Prayer)", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                8 => _x( "Relational Stewardship (List 100)", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                6 => _x( "Consumer vs Producer Lifestyle", "coaching checklist", 'zume-coaching-checklist' ),
+                7 => _x( "Prayer Wheel (Hour in Prayer)", "coaching checklist", 'zume-coaching-checklist' ),
+                8 => _x( "Relational Stewardship (List 100)", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 3 */
-                9 => _x( "Kingdom Economy", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                10 => _x( "How to Share the Gospel", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                11 => _x( "How to Baptize", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                9 => _x( "Kingdom Economy", "coaching checklist", 'zume-coaching-checklist' ),
+                10 => _x( "How to Share the Gospel", "coaching checklist", 'zume-coaching-checklist' ),
+                11 => _x( "How to Baptize", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 4 */
-                12 => _x( "3 Minute Testimony", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                13 => _x( "Greatest Blessing", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                14 => _x( "Duckling Discipleship", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                15 => _x( "Eyes to See Where the Kingdom Isn't", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                16 => _x( "Lord's Supper", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                12 => _x( "3 Minute Testimony", "coaching checklist", 'zume-coaching-checklist' ),
+                13 => _x( "Greatest Blessing", "coaching checklist", 'zume-coaching-checklist' ),
+                14 => _x( "Duckling Discipleship", "coaching checklist", 'zume-coaching-checklist' ),
+                15 => _x( "Eyes to See Where the Kingdom Isn't", "coaching checklist", 'zume-coaching-checklist' ),
+                16 => _x( "Lord's Supper", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 5 */
-                17 => _x( "Prayer Walking", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                18 => _x( "Person of Peace", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                19 => _x( "BLESS Prayer Pattern", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                17 => _x( "Prayer Walking", "coaching checklist", 'zume-coaching-checklist' ),
+                18 => _x( "Person of Peace", "coaching checklist", 'zume-coaching-checklist' ),
+                19 => _x( "BLESS Prayer Pattern", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 6 */
-                20 => _x( "Faithfulness is Better", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                21 => _x( "3/3 Group Format", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                20 => _x( "Faithfulness is Better", "coaching checklist", 'zume-coaching-checklist' ),
+                21 => _x( "3/3 Group Format", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 7 */
-                22 => _x( "Training Cycle", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                22 => _x( "Training Cycle", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 8 */
-                23 => _x( "Leadership Cells", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                23 => _x( "Leadership Cells", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 9 */
-                24 => _x( "Non-Sequential Growth", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                25 => _x( "Pace Matters", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                26 => _x( "Being Part of Two Churches", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                24 => _x( "Non-Sequential Growth", "coaching checklist", 'zume-coaching-checklist' ),
+                25 => _x( "Pace Matters", "coaching checklist", 'zume-coaching-checklist' ),
+                26 => _x( "Being Part of Two Churches", "coaching checklist", 'zume-coaching-checklist' ),
 
                 /* session 10 */
-                27 => _x( "Coaching Checklist", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                28 => _x( "Leadership in Networks", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                29 => _x( "Peer Mentoring Group", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                30 => _x( "Four Fields Tool", "coaching checklist", 'disciple-tools-coaching-checklist' ),
-                31 => _x( "Generational Mapping", "coaching checklist", 'disciple-tools-coaching-checklist' ),
+                27 => _x( "Coaching Checklist", "coaching checklist", 'zume-coaching-checklist' ),
+                28 => _x( "Leadership in Networks", "coaching checklist", 'zume-coaching-checklist' ),
+                29 => _x( "Peer Mentoring Group", "coaching checklist", 'zume-coaching-checklist' ),
+                30 => _x( "Four Fields Tool", "coaching checklist", 'zume-coaching-checklist' ),
+                31 => _x( "Generational Mapping", "coaching checklist", 'zume-coaching-checklist' ),
 
             ];
             foreach ( $coaching_checklist_items as $item_key => $item_label ){
@@ -135,7 +135,7 @@ class DT_Coaching_Checklist_Tile
                 }
             }
             ?>
-            <p><?php esc_html_e( 'Completed', 'disciple-tools-coaching-checklist' ); ?> <?php echo esc_html( $total_done ); ?>/<?php echo esc_html( $total ); ?></p>
+            <p><?php esc_html_e( 'Completed', 'zume-coaching-checklist' ); ?> <?php echo esc_html( $total_done ); ?>/<?php echo esc_html( $total ); ?></p>
             <?php
 
             foreach ($post_fields as $field_key => $field_options ) :
@@ -167,4 +167,4 @@ class DT_Coaching_Checklist_Tile
         <?php }
     }
 }
-DT_Coaching_Checklist_Tile::instance();
+Zume_Coaching_Checklist_Tile::instance();
