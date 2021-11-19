@@ -140,25 +140,6 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                         console.log(e)
                         jQuery('#error').html(e)
                     })
-                    //
-                    // let btnh = jQuery('.'+key+'_h')
-                    // if ( ! btnh.hasClass('selected-select-button') ){
-                    //     btnh.addClass('selected-select-button')
-                    //     window.makeRequest( "POST", jsObject.parts.type, { parts: jsObject.parts, field_key: key, option_value: 'h', turn_off: turn_off }, jsObject.parts.root + '/v1/' ).done(function(data){
-                    //         if ( 'on' === data ) {
-                    //             btnh.addClass('selected-select-button')
-                    //             btnh.removeClass('empty-select-button')
-                    //             btnh.addClass('added')
-                    //         } else {
-                    //             btnh.removeClass('selected-select-button')
-                    //             btnh.addClass('empty-select-button')
-                    //         }
-                    //         })
-                    //         .fail(function(e) {
-                    //             console.log(e)
-                    //             jQuery('#error').html(e)
-                    //         })
-                    // }
                 })
                 $('.ost_button').on('click', function(e){
                     let fk = jQuery(this).data('field-key')
@@ -166,6 +147,12 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                     if ( ! ( btn.hasClass('selected-select-button') || btn.hasClass('added')  ) ){
                         btn.addClass('added').click()
                     }
+                })
+                jQuery('.coaching-checklist-modal-open').on('click', function(){
+                    let ccurl = jQuery(this).data('value')
+                    jQuery('#modal-large-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:2000px;border:0;"></iframe>`)
+                    jQuery('#modal-large').foundation('open')
+
                 })
             })
 
@@ -232,7 +219,13 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 </div>
             </div>
         </div>
-
+        <div class="reveal large" id="modal-large" data-v-offset="0" data-reveal>
+            <h3 id="modal-large-title"></h3>
+            <div id="modal-large-content"></div>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <?php
     }
 

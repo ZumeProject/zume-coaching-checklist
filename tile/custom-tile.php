@@ -209,7 +209,7 @@ function zume_write_checklist_row( $post, $post_fields, $field_key, $field_optio
     ?>
     <div style="display: flex">
         <div style="flex-grow: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
-            <a href="<?php echo esc_url( $url ); ?>" target="_blank"><?php echo esc_html( $field_options["name"] ); ?></a>
+            <a data-value="<?php echo esc_url( $url ); ?>" class="coaching-checklist-modal-open" target="_blank"><?php echo esc_html( $field_options["name"] ); ?></a>
         </div>
         <div style="">
             <div class="small button-group" style="display: inline-block; margin-bottom: 5px">
@@ -349,6 +349,12 @@ class Zume_Coaching_Checklist_Tile
                         if ( ! ( btn.hasClass('selected-select-button') || btn.hasClass('added')  ) ){
                             btn.addClass('added').click()
                         }
+                    })
+                    jQuery('.coaching-checklist-modal-open').on('click', function(){
+                        let ccurl = jQuery(this).data('value')
+                        jQuery('#modal-large-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:2000px;border:0;"></iframe>`)
+                        jQuery('#modal-large').foundation('open')
+
                     })
                 })
             </script>
