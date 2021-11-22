@@ -154,6 +154,9 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                     jQuery('#modal-large-cc').foundation('open')
 
                 })
+                jQuery('.additional-close').on('click', function(){
+                    jQuery('#modal-large-cc').foundation('close')
+                })
             })
 
         </script>
@@ -265,11 +268,11 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
             </div>
         </div>
         <div class="reveal large" id="modal-large-cc" data-v-offset="0" data-reveal>
-            <h3 id="modal-large-cc-title">&nbsp;</h3>
+            <h3 id="modal-large-cc-title">&nbsp;<span class="show-for-small-only additional-close">Return to Checklist</span></h3>
             <hr>
             <div id="modal-large-cc-content"></div>
             <button class="close-button" data-close aria-label="Close modal" type="button">
-                <span aria-hidden="true">Return to Coaching Checklist &times; </span>
+               <span class="hide-for-small-only additional-close"> Return to Checklist</span><span aria-hidden="true"> &times; </span>
             </button>
         </div>
         <?php
