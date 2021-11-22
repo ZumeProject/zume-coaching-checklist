@@ -34,6 +34,7 @@ function zume_coaching_checklist() {
     $wp_theme = wp_get_theme();
     $version = $wp_theme->version;
 
+
     /*
      * Check if the Disciple.Tools theme is loaded and is the latest required version
      */

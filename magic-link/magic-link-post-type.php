@@ -163,8 +163,12 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
 
     public function body(){
         $post_type = 'contacts';
-        $post_fields = DT_Posts::get_post_field_settings( $post_type );
-        $post = DT_Posts::get_post( $post_type, $this->parts['post_id'] );
+        $post_fields = DT_Posts::get_post_field_settings( $post_type, true );
+        $post = DT_Posts::get_post( $post_type, $this->parts['post_id'], false, false, true );
+        if ( is_wp_error( $post ) ) {
+            dt_write_log( $post );
+            return;
+        }
         $zume_coaching_checklist_items = zume_coaching_checklist_items();
         ?>
         <div id="custom-style"></div>
