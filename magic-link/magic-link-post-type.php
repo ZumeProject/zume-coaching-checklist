@@ -226,40 +226,40 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 </div>
                 <div class="cell">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell medium-1">
+                        <div class="cell small-1">
                             <button type="button" class="dt_multi_select empty-select-button select-button button" style="padding:5px" >H</button>
                         </div>
-                        <div class="cell medium-5">
+                        <div class="cell small-5">
                             <h2><strong>H</strong>eard</h2>
                         </div>
-                        <div class="cell medium-6">
+                        <div class="cell small-6">
                             Have you heard about the concept or skill? (If not, you can click the link and review.)
                         </div>
-                        <div class="cell medium-1">
+                        <div class="cell small-1">
                             <button type="button" class="dt_multi_select empty-select-button select-button button" style="padding:5px" >O</button>
                         </div>
-                        <div class="cell medium-5">
+                        <div class="cell small-5">
                             <h2><strong>O</strong>beyed</h2>
                         </div>
-                        <div class="cell medium-6">
+                        <div class="cell small-6">
                             Obeying a skill is to practice it. Obeying a concept is to accept it as good and right.
                         </div>
-                        <div class="cell medium-1">
+                        <div class="cell small-1">
                             <button type="button" class="dt_multi_select empty-select-button select-button button" style="padding:5px" >S</button>
                         </div>
-                        <div class="cell medium-5">
+                        <div class="cell small-5">
                             <h2><strong>S</strong>hared</h2>
                         </div>
-                        <div class="cell medium-6">
+                        <div class="cell small-6">
                             Have you shared the concept or skill with others?
                         </div>
-                        <div class="cell medium-1">
+                        <div class="cell small-1">
                             <button type="button" class="dt_multi_select empty-select-button select-button button" style="padding:5px" >T</button>
                         </div>
-                        <div class="cell medium-5">
+                        <div class="cell small-5">
                             <h2><strong>T</strong>rained</h2>
                         </div>
-                        <div class="cell medium-6">
+                        <div class="cell small-6">
                             Have you trained someone else in the concept or skill?
                         </div>
                     </div>
