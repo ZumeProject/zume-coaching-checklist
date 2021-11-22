@@ -88,7 +88,7 @@ function zume_coaching_checklist_items() : array {
             'type' => 'concept'
         ],
         15 => [
-            'label' => _x( "Eyes to See Where the Kingdom Isn't", "coaching checklist", 'zume-coaching-checklist' ),
+            'label' => _x( "See Where the Kingdom Isn't", "coaching checklist", 'zume-coaching-checklist' ),
             'description' => "Begin to see where God’s Kingdom isn’t. These are usually the places where God wants to work the most.",
             'url' => 'https://zume.training/eyes-to-see-where-the-kingdom-isnt/',
             'type' => 'concept'
@@ -211,8 +211,8 @@ function zume_write_checklist_row( $post, $post_fields, $field_key, $field_optio
         <div style="flex-grow: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
             <a data-value="<?php echo esc_url( $url ); ?>" class="coaching-checklist-modal-open" target="_blank"><?php echo esc_html( $field_options["name"] ); ?></a>
         </div>
-        <div style="">
-            <div class="small button-group" style="display: inline-block; margin-bottom: 5px">
+        <div style="white-space:nowrap;">
+            <div class="small button-group" style="display: inline-block; margin-bottom: 5px;">
                 <?php foreach ( $post_fields[$field_key]["default"] as $option_key => $option_value ): ?>
                     <?php
                     $class = ( in_array( $option_key, $post[$field_key] ?? [] ) ) ?
