@@ -150,9 +150,8 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 })
                 jQuery('.coaching-checklist-modal-open').on('click', function(){
                     let ccurl = jQuery(this).data('value')
-                    jQuery('#modal-large-cc-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:2000px;border:0;"></iframe>`)
                     jQuery('#modal-large-cc').foundation('open')
-
+                    jQuery('#modal-large-cc-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:${window.innerHeight - 85}px;border:0;"></iframe>`)
                 })
                 jQuery('.additional-close').on('click', function(){
                     jQuery('#modal-large-cc').foundation('close')
