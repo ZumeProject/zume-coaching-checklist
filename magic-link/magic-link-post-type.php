@@ -225,7 +225,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
 
                 </div>
                 <div class="cell">
-                    <div class="grid-x grid-padding-x">
+                    <div class="grid-x grid-padding-x grid-padding-y">
                         <div class="cell small-1">
                             <button type="button" class="dt_multi_select empty-select-button select-button button" style="padding:5px" >H</button>
                         </div>
