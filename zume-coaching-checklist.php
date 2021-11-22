@@ -5,7 +5,7 @@
  * Description: Zúme - Coaching Checklist add a tile to contacts for tracking Hearing, Obeying, Sharing, Training competence of Zúme concepts
  * Text Domain: zume-coaching-checklist
  * Domain Path: /languages
- * Version:  0.1
+ * Version:  0.2
  * Author URI: https://github.com/DiscipleTools
  * GitHub Plugin URI: https://github.com/ZumeProject/zume-coaching-checklist
  * Requires at least: 4.7.0
