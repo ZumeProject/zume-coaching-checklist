@@ -150,8 +150,8 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 })
                 jQuery('.coaching-checklist-modal-open').on('click', function(){
                     let ccurl = jQuery(this).data('value')
-                    jQuery('#modal-large-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:2000px;border:0;"></iframe>`)
-                    jQuery('#modal-large').foundation('open')
+                    jQuery('#modal-large-cc-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:2000px;border:0;"></iframe>`)
+                    jQuery('#modal-large-cc').foundation('open')
 
                 })
             })
@@ -264,10 +264,10 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 </div>
             </div>
         </div>
-        <div class="reveal large" id="modal-large" data-v-offset="0" data-reveal>
-            <h3 id="modal-large-title">&nbsp;</h3>
+        <div class="reveal large" id="modal-large-cc" data-v-offset="0" data-reveal>
+            <h3 id="modal-large-cc-title">&nbsp;</h3>
             <hr>
-            <div id="modal-large-content"></div>
+            <div id="modal-large-cc-content"></div>
             <button class="close-button" data-close aria-label="Close modal" type="button">
                 <span aria-hidden="true">Return to Coaching Checklist &times; </span>
             </button>
