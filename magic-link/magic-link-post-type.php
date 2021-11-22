@@ -265,10 +265,11 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
             </div>
         </div>
         <div class="reveal large" id="modal-large" data-v-offset="0" data-reveal>
-            <h3 id="modal-large-title"></h3>
+            <h3 id="modal-large-title">&nbsp;</h3>
+            <hr>
             <div id="modal-large-content"></div>
             <button class="close-button" data-close aria-label="Close modal" type="button">
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">Return to Coaching Checklist &times; </span>
             </button>
         </div>
         <?php
