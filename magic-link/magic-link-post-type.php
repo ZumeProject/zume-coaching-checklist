@@ -10,6 +10,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Zúme Coaching Checklist';
+    public $page_description = 'Zúme personal coaching checklist.';
     public $root = "zume_app";
     public $type = 'coaching_checklist';
     public $post_type = 'contacts';
@@ -31,6 +32,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
          * post type and module section
          */
         add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
+        add_filter( 'dt_settings_apps_list', [ $this, 'dt_settings_apps_list' ], 10, 1 );
 
         /**
          * tests if other URL
@@ -178,7 +180,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
             <div class="grid-x" style="width: 100%;max-width:400px; margin: 0 auto;">
                 <div class="cell center">
                     <h2 id="title">Zúme Coaching Checklist</h2>
-                    <p><?php echo esc_html($post['name']) ?></p>
+                    <p><?php echo esc_html( $post['name'] ) ?></p>
                 </div>
                 <div class="cell">
 
@@ -303,11 +305,14 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
 
         $post_id = $params["parts"]["post_id"]; //has been verified in verify_rest_endpoint_permissions_on_post()
 
-        if ( isset( $params['field_key'] ) && !empty( $params['field_key'] ) && isset( $params['option_value'] ) && !empty( $params['option_value'] )  ){
+        if ( isset( $params['field_key'] ) && !empty( $params['field_key'] ) && isset( $params['option_value'] ) && !empty( $params['option_value'] ) ){
             $fields = [
                 $params['field_key'] => [
                     'values' => [
-                        [ 'value' => $params['option_value'], 'delete' => $params['turn_off'] ]
+                        [
+            'value' => $params['option_value'],
+            'delete' => $params['turn_off']
+                        ]
                     ]
                 ],
             ];
@@ -325,6 +330,19 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
         }
 
         return true;
+    }
+
+    /**
+     * Post Type Tile Examples
+     */
+    public function dt_settings_apps_list( $apps_list ) {
+        $apps_list[$this->meta_key] = [
+            'key' => $this->meta_key,
+            'url_base' => $this->root. '/'. $this->type,
+            'label' => $this->page_title,
+            'description' => $this->page_description,
+        ];
+        return $apps_list;
     }
 }
 Zume_Coaching_Checklist_Magic_Link::instance();
