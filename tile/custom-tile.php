@@ -283,7 +283,7 @@ class Zume_Coaching_Checklist_Tile
             foreach ( $zume_coaching_checklist_items as $item_key => $item ){
                 $fields["zume_coaching_checklist_" . $item_key ] = [
                     "name" => $item['label'],
-                    "description" => _x( $item['description'], 'Optional Documentation', 'disciple_tools' ),
+                    "description" => $item['description'],
                     "default" => $options,
                     "tile" => "zume_coaching_checklist",
                     "type" => "multi_select",

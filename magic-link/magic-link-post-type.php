@@ -113,6 +113,27 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
             ]) ?>][0]
 
             jQuery(document).ready(function($){
+                // setup
+                window.makeRequest( "POST", jsObject.parts.type, { action: 'get', parts: jsObject.parts }, jsObject.parts.root + '/v1/' ).done(function(data){
+                    console.log(data)
+                    jQuery.each(data, function(i,v){
+                        if ( 'zume_coaching_checklist' === i.substr(0, 23) ) {
+                            jQuery.each(v, function(ii,vv){
+
+                                let btn = jQuery('.'+i+'_'+vv)
+                                btn.removeClass('empty-select-button').addClass('selected-select-button')
+                            })
+                        }
+                    })
+
+                    jQuery('.loading-spinner').removeClass('active')
+                })
+                .fail(function(e) {
+                    console.log(e)
+                    jQuery('#error').html(e)
+                })
+
+                // listen for changes
                 $('.dt_multi_select').on("click", function (e){
                     $(this).addClass("loading")
                     let key = $(this).data('field-key')
@@ -129,7 +150,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                         btn.removeClass('empty-select-button')
                     }
 
-                    window.makeRequest( "POST", jsObject.parts.type, { parts: jsObject.parts, field_key: key, option_value: item, turn_off: turn_off }, jsObject.parts.root + '/v1/' ).done(function(data){
+                    window.makeRequest( "POST", jsObject.parts.type, { action: 'update', parts: jsObject.parts, field_key: key, option_value: item, turn_off: turn_off }, jsObject.parts.root + '/v1/' ).done(function(data){
                         if ( 'on' === data ) {
                             btn.addClass('selected-select-button')
                             btn.removeClass('empty-select-button')
@@ -143,13 +164,26 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                         jQuery('#error').html(e)
                     })
                 })
+
                 $('.ost_button').on('click', function(e){
                     let fk = jQuery(this).data('field-key')
-                    let btn = jQuery('.'+fk+'_h')
-                    if ( ! ( btn.hasClass('selected-select-button') || btn.hasClass('added')  ) ){
-                        btn.addClass('added').click()
+                    let ok = jQuery(this).data('option-key')
+
+                    // if h is unchecked (cannot ost without h)
+                    let hbtn = jQuery('.'+fk+'_h')
+                    if ( ! ( hbtn.hasClass('selected-select-button') || hbtn.hasClass('added')  ) ){
+                        hbtn.addClass('added').click()
+                    }
+                    // if t selected and s is unchecked. (cannot t without s)
+                    if ( 't' === ok ) {
+                        let sbtn = jQuery('.'+fk+'_s')
+                        if ( ! ( sbtn.hasClass('selected-select-button') || sbtn.hasClass('added')  ) ){
+                            sbtn.addClass('added').click()
+                        }
                     }
                 })
+
+                // handle modals
                 jQuery('.coaching-checklist-modal-open').on('click', function(){
                     let ccurl = jQuery(this).data('value')
                     jQuery('#modal-large-cc').foundation('open')
@@ -166,7 +200,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
     }
 
     public function body(){
-        $post_type = 'contacts';
+        $post_type = $this->post_type;
         $post_fields = DT_Posts::get_post_field_settings( $post_type, true );
         $post = DT_Posts::get_post( $post_type, $this->parts['post_id'], false, false, true );
         if ( is_wp_error( $post ) ) {
@@ -181,6 +215,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 <div class="cell center">
                     <h2 id="title">Zúme Coaching Checklist</h2>
                     <p><?php echo esc_html( $post['name'] ) ?></p>
+                    <span class="loading-spinner active"></span>
                 </div>
                 <div class="cell">
 
@@ -192,7 +227,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                             $id = $string[3];
 
                             if ( 'concept' === $zume_coaching_checklist_items[$id]['type'] ) :
-                                zume_write_checklist_row( $post, $post_fields, $field_key, $field_options, $zume_coaching_checklist_items[$id] );
+                                $this->_row( $post, $post_fields, $field_key, $field_options, $zume_coaching_checklist_items[$id] );
                             endif;
                         endif;
                     endforeach;
@@ -204,7 +239,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                             $string = explode( '_', $field_key );
                             $id = $string[3];
                             if ( 'tool' === $zume_coaching_checklist_items[$id]['type'] ) :
-                                zume_write_checklist_row( $post, $post_fields, $field_key, $field_options, $zume_coaching_checklist_items[$id] );
+                                $this->_row( $post, $post_fields, $field_key, $field_options, $zume_coaching_checklist_items[$id] );
                             endif;
                         endif;
                     endforeach;
@@ -279,6 +314,32 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
         <?php
     }
 
+    public function _row( $post, $post_fields, $field_key, $field_options, $item ) {
+        $url = $item['url'] ?? 'https://zume.training/training';
+        $post_fields[$field_key]["hidden"] = false;
+        $post_fields[$field_key]["custom_display"] = false;
+
+        ?>
+        <div style="display: flex">
+            <div style="flex-grow: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+                <a data-value="<?php echo esc_url( $url ); ?>" class="coaching-checklist-modal-open" target="_blank"><?php echo esc_html( $field_options["name"] ); ?></a>
+            </div>
+            <div style="white-space:nowrap;">
+                <div class="small button-group" style="display: inline-block; margin-bottom: 5px;">
+                    <?php foreach ( $post_fields[$field_key]["default"] as $option_key => $option_value ): ?>
+                        <button id="<?php echo esc_html( $option_key ) ?>" type="button"
+                                data-field-key="<?php echo esc_html( $field_key ); ?>"
+                                data-option-key="<?php echo esc_html( $option_key ) ?>"
+                                class="dt_multi_select empty-select-button <?php echo esc_html( $field_key ); ?>_<?php echo esc_html( $option_key ) ?> select-button button <?php echo ( 'h' !== $option_key ) ? 'ost_button' :''; ?>" style="padding:5px">
+                            <?php echo esc_html( $post_fields[$field_key]["default"][$option_key]["label"] ) ?>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
     /**
      * Register REST Endpoints
      * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
@@ -289,7 +350,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
             $namespace, '/'.$this->type, [
                 [
                     'methods'  => "POST",
-                    'callback' => [ $this, 'update_record' ],
+                    'callback' => [ $this, 'endpoint' ],
                     'permission_callback' => function( WP_REST_Request $request ){
                         $magic = new DT_Magic_URL( $this->root );
                         return $magic->verify_rest_endpoint_permissions_on_post( $request );
@@ -299,37 +360,55 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
         );
     }
 
-    public function update_record( WP_REST_Request $request ) {
+    public function endpoint( WP_REST_Request $request ) {
         $params = $request->get_params();
         $params = dt_recursive_sanitize_array( $params );
 
-        $post_id = $params["parts"]["post_id"]; //has been verified in verify_rest_endpoint_permissions_on_post()
-
-        if ( isset( $params['field_key'] ) && !empty( $params['field_key'] ) && isset( $params['option_value'] ) && !empty( $params['option_value'] ) ){
-            $fields = [
-                $params['field_key'] => [
-                    'values' => [
-                        [
-            'value' => $params['option_value'],
-            'delete' => $params['turn_off']
-                        ]
-                    ]
-                ],
-            ];
-
-            $update = DT_Posts::update_post( $this->post_type, $post_id, $fields, false, false );
-            if ( is_wp_error( $update ) ){
-                return $update;
-            }
-
-            if ( $params['turn_off'] ) {
-                return 'off';
-            } else {
-                return 'on';
-            }
+        if ( ! isset( $params['parts'], $params['action'] ) ) {
+            return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        return true;
+        $post_id = $params["parts"]["post_id"]; //has been verified in verify_rest_endpoint_permissions_on_post()
+        $action = sanitize_text_field( wp_unslash( $params['action'] ) );
+
+        switch ( $action ) {
+            case 'get':
+                $p = DT_Posts::get_post( $this->post_type, $post_id, false, false );
+                if ( is_wp_error( $p ) ) {
+                    dt_write_log( $p );
+                    return [];
+                } else {
+                    return $p;
+                }
+            case 'update':
+                if ( isset( $params['field_key'] ) && !empty( $params['field_key'] ) && isset( $params['option_value'] ) && !empty( $params['option_value'] ) ){
+                    $fields = [
+                        $params['field_key'] => [
+                            'values' => [
+                                [
+                                    'value' => $params['option_value'],
+                                    'delete' => $params['turn_off']
+                                ]
+                            ]
+                        ],
+                    ];
+
+                    $update = DT_Posts::update_post( $this->post_type, $post_id, $fields, false, false );
+                    if ( is_wp_error( $update ) ){
+                        return $update;
+                    }
+
+                    if ( $params['turn_off'] ) {
+                        return 'off';
+                    } else {
+                        return 'on';
+                    }
+                }
+
+                return false;
+            default:
+                return new WP_Error( __METHOD__, "Incorrect action", [ 'status' => 400 ] );
+        }
     }
 
     /**
