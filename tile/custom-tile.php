@@ -234,6 +234,8 @@ function zume_write_checklist_row( $post, $post_fields, $field_key, $field_optio
 
 class Zume_Coaching_Checklist_Tile
 {
+    public $page_title = 'Zúme Coaching Checklist';
+    public $page_description = 'Zúme Coaching Checklist for Zúme Training.';
     public $root = "zume_app";
     public $type = 'coaching_checklist';
     public $post_type = 'contacts';
@@ -249,9 +251,10 @@ class Zume_Coaching_Checklist_Tile
 
     public function __construct(){
         add_filter( 'dt_details_additional_tiles', [ $this, "dt_details_additional_tiles" ], 10, 2 );
-        add_filter( "dt_custom_fields_settings", [ $this, "dt_custom_fields_settings" ], 10, 2 );
         add_action( "dt_details_additional_section", [ $this, "dt_details_additional_section" ], 30, 2 );
-        add_action( "dt_details_additional_section", [ $this, "dt_details_additional_section_2" ], 40, 2 );
+        add_filter( 'dt_settings_apps_list', [ $this, 'dt_settings_apps_list' ], 10, 1 );
+        add_filter( "dt_custom_fields_settings", [ $this, "dt_custom_fields_settings" ], 10, 2 );
+
     }
 
     /**
@@ -262,8 +265,11 @@ class Zume_Coaching_Checklist_Tile
      * @return mixed
      */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ) {
-        if ( $post_type === "contacts" ){
-            $tiles["zume_coaching_checklist"] = [ "label" => __( "Coaching Checklist", 'zume-coaching-checklist' ) ];
+        if ( $post_type === 'contacts' && ! isset( $tiles["apps"] ) ){
+            $tiles["apps"] = [
+                "label" => __( "Apps", 'disciple_tools' ),
+                "description" => __( "Apps available on this record.", 'disciple_tools' )
+            ];
         }
         return $tiles;
     }
@@ -296,65 +302,66 @@ class Zume_Coaching_Checklist_Tile
     }
 
     public function dt_details_additional_section( $section, $post_type ) {
-        if ( $section === "zume_coaching_checklist" && $post_type === "contacts" ) {
-            $zume_coaching_checklist_items = zume_coaching_checklist_items();
-            $post_fields = DT_Posts::get_post_field_settings( $post_type );
-            $post = DT_Posts::get_post( $post_type, get_the_ID() );
-            ?>
 
-            <p><strong>Concepts</strong></p>
-            <?php
-            foreach ($post_fields as $field_key => $field_options ) :
-                if ( isset( $field_options["tile"] ) && $field_options["tile"] === "zume_coaching_checklist" ) :
-                    $string = explode( '_', $field_key );
-                    $id = $string[3];
-
-                    if ( 'concept' === $zume_coaching_checklist_items[$id]['type'] ) :
-                        zume_write_checklist_row( $post, $post_fields, $field_key, $field_options, $zume_coaching_checklist_items[$id] );
-                    endif;
-                endif;
-            endforeach;
-            ?>
-            <p><strong>Tools</strong></p>
-            <?php
-            foreach ($post_fields as $field_key => $field_options ) :
-                if ( isset( $field_options["tile"] ) && $field_options["tile"] === "zume_coaching_checklist" ) :
-                    $string = explode( '_', $field_key );
-                    $id = $string[3];
-                    if ( 'tool' === $zume_coaching_checklist_items[$id]['type'] ) :
-                        zume_write_checklist_row( $post, $post_fields, $field_key, $field_options, $zume_coaching_checklist_items[$id] );
-                    endif;
-                endif;
-            endforeach;
-            ?>
-
-            <?php
-            $total_done = 0;
-            $total = 0;
-            foreach ($post_fields as $field_key => $field_options ) {
-                if ( isset( $field_options["tile"] ) && $field_options["tile"] === "zume_coaching_checklist" ) {
-                    $total += sizeof( $field_options["default"] );
-                    if ( isset( $post[$field_key] ) ){
-                        $total_done += sizeof( $post[$field_key] );
-                    }
-                }
+        if ( $section === "apps" && $post_type === "contacts" ) {
+            $record = DT_Posts::get_post( $post_type, get_the_ID() );
+            if ( isset( $record[$this->meta_key] )) {
+                $key = $record[$this->meta_key];
+            } else {
+                $key = dt_create_unique_key();
+                update_post_meta( get_the_ID(), $this->meta_key, $key );
             }
+            $link = DT_Magic_URL::get_link_url( $this->root, $this->type, $key )
             ?>
-            <p><?php esc_html_e( 'Completed', 'zume-coaching-checklist' ); ?> <?php echo esc_html( $total_done ); ?>/<?php echo esc_html( $total ); ?></p>
+            <div class="section-subheader"><?php echo esc_html( $this->page_title ) ?></div>
+            <div class="section-app-links <?php echo esc_attr( $this->meta_key ); ?>">
+                <a type="button" class="empty-select-button select-button small button view"><img class="dt-icon" src="<?php echo get_template_directory_uri() . '/dt-assets/images/visibility.svg?v=2' ?>" /></a>
+                <a type="button" class="empty-select-button select-button small button copy_to_clipboard" data-value="<?php echo esc_html( $link ); ?>"><img class="dt-icon" src="<?php echo get_template_directory_uri() . '/dt-assets/images/duplicate.svg?v=2' ?>" /></a>
+                <a type="button" class="empty-select-button select-button small button send"><img class="dt-icon" src="<?php echo get_template_directory_uri() . '/dt-assets/images/send.svg?v=2' ?>" /></a>
+                <a type="button" class="empty-select-button select-button small button qr"><img class="dt-icon" src="<?php echo get_template_directory_uri() . '/dt-assets/images/qrcode-solid.svg?v=2' ?>" /></a>
+                <a type="button" class="empty-select-button select-button small button reset"><img class="dt-icon" src="<?php echo get_template_directory_uri() . '/dt-assets/images/undo.svg?v=2' ?>" /></a>
+            </div>
             <script>
                 jQuery(document).ready(function(){
-                    jQuery('.ost_button').on('click', function(e){
-                        let fk = jQuery(this).data('field-key')
-                        let btn = jQuery('.'+fk+'_h')
-                        if ( ! ( btn.hasClass('selected-select-button') || btn.hasClass('added')  ) ){
-                            btn.addClass('added').click()
-                        }
-                    })
-                    jQuery('.coaching-checklist-modal-open').on('click', function(){
-                        let ccurl = jQuery(this).data('value')
-                        jQuery('#modal-large-content').empty().append(`<iframe src="${ccurl}" style="width:100%;height:2000px;border:0;"></iframe>`)
-                        jQuery('#modal-large').foundation('open')
+                    if ( typeof window.app_key === 'undefined' ){
+                        window.app_key = []
+                    }
+                    if ( typeof window.app_url === 'undefined' ){
+                        window.app_url = []
+                    }
+                    window.app_key['<?php echo esc_attr( $this->meta_key ) ?>'] = '<?php echo esc_attr( $key ) ?>'
+                    window.app_url['<?php echo esc_attr( $this->meta_key ) ?>'] = '<?php echo esc_url( site_url() . '/' . $this->root . '/' .$this->type . '/' ) ?>'
 
+                    jQuery('.<?php echo esc_attr( $this->meta_key ); ?>.select-button.button.copy_to_clipboard').data('value', `${window.app_url['<?php echo esc_attr( $this->meta_key ) ?>']}${window.app_key['<?php echo esc_attr( $this->meta_key ) ?>']}`)
+                    jQuery('.section-app-links.<?php echo esc_attr( $this->meta_key ); ?> .view').on('click', function(e){
+                        jQuery('#modal-large-title').empty().html(`<h3 class="section-header"><?php echo esc_html( $this->page_title )  ?></h3><span class="small-text"><?php echo esc_html( $this->page_description ) ?></span><hr>`)
+                        jQuery('#modal-large-content').empty().html(`<iframe src="${window.app_url['<?php echo esc_attr( $this->meta_key ) ?>']}${window.app_key['<?php echo esc_attr( $this->meta_key ) ?>']}" style="width:100%;height: ${window.innerHeight - 170}px;border:1px solid lightgrey;"></iframe>`)
+                        jQuery('#modal-large').foundation('open')
+                    })
+                    jQuery('.section-app-links.<?php echo esc_attr( $this->meta_key ); ?> .send').on('click', function(e){
+                        jQuery('#modal-small-title').empty().html(`<h3 class="section-header"><?php echo esc_html( $this->page_title )  ?></h3><span class="small-text">Send a link via email through the system.</span><hr>`)
+                        jQuery('#modal-small-content').empty().html(`<div class="grid-x"><div class="cell">You can include a simple, short note in the body of the email before the link.<br><input type="text" placeholder="Add a note" /><br><button type="button" class="button">Send Email with Link</button></div></div>`)
+                        jQuery('#modal-small').foundation('open')
+                    })
+                    jQuery('.section-app-links.<?php echo esc_attr( $this->meta_key ); ?> .qr').on('click', function(e){
+                        jQuery('#modal-small-title').empty().html(`<h3 class="section-header"><?php echo esc_html( $this->page_title )  ?></h3><span class="small-text">QR codes are useful for passing the coaching links to mobile devices.</span><hr>`)
+                        jQuery('#modal-small-content').empty().html(`<div class="grid-x"><div class="cell center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${window.app_url['<?php echo esc_attr( $this->meta_key ) ?>']}${window.app_key['<?php echo esc_attr( $this->meta_key ) ?>']}" style="max-width:400px;" /></div></div>`)
+                        jQuery('#modal-small').foundation('open')
+                    })
+                    jQuery('.section-app-links.<?php echo esc_attr( $this->meta_key ); ?> .reset').on('click', function(e){
+                        jQuery('#modal-small-title').empty().html(`<h3 class="section-header"><?php echo esc_html( $this->page_title )  ?></h3><span class="small-text">Reset the security code. No data is removed. Only access. The previous link will be disabled and another one created.</span><hr>`)
+                        jQuery('#modal-small-content').empty().html(`<button type="button" class="button <?php echo esc_attr( $this->meta_key ); ?> delete-and-reset">Delete and replace the app link</button> <span class="loading-spinner"></span>`)
+                        jQuery('#modal-small').foundation('open')
+                        jQuery('.button.<?php echo esc_attr( $this->meta_key ); ?>.delete-and-reset').on('click', function(e){
+                            jQuery('.button.<?php echo esc_attr($this->meta_key); ?>.delete-and-reset').prop('disable', true)
+                            window.API.update_post('<?php echo esc_attr( $post_type ); ?>', <?php echo esc_attr( get_the_ID()); ?>, { ['<?php echo esc_attr( $this->meta_key ); ?>']: window.sha256(Date.now()) })
+                                .done( newPost => {
+                                    console.log( newPost )
+                                    jQuery('#modal-small').foundation('close')
+                                    window.app_key['<?php echo esc_attr( $this->meta_key ) ?>'] = newPost['<?php echo esc_attr( $this->meta_key ) ?>']
+                                    jQuery('.section-app-links.<?php echo esc_attr( $this->meta_key ); ?> .select-button.button.copy_to_clipboard').data('value', `${window.app_url['<?php echo esc_attr( $this->meta_key ) ?>']}${window.app_key['<?php echo esc_attr( $this->meta_key ) ?>']}`)
+                                })
+                        })
                     })
                 })
             </script>
@@ -362,25 +369,15 @@ class Zume_Coaching_Checklist_Tile
         }
     }
 
-    public function dt_details_additional_section_2( $section, $post_type ) {
-        if ( $section === "zume_coaching_checklist" && $post_type === "contacts" ) {
-            $post = DT_Posts::get_post( $post_type, get_the_ID() );
-
-            if ( isset( $post[$this->meta_key] )) {
-                $key = $post[$this->meta_key];
-            } else {
-                $key = dt_create_unique_key();
-                update_post_meta( get_the_ID(), $this->meta_key, $key );
-            }
-            $link = DT_Magic_URL::get_link_url( $this->root, $this->type, $key )
-            ?>
-            <hr>
-            <div class="section-subheader">Distributable Link for Coaching Checklist</div>
-            <div id="practitioner_portal">
-                <a class="button small hollow" href="<?php echo esc_html( $link ); ?>" target="_blank">Open Link</a>
-                <a class="button small hollow copy_to_clipboard" data-value="<?php echo esc_html( $link ); ?>" target="_blank">Copy Link</a>
-            </div>
-        <?php }
+    public function dt_settings_apps_list( $apps_list ) {
+        $apps_list[$this->meta_key] = [
+            'key' => $this->meta_key,
+            'url_base' => $this->root. '/'. $this->type,
+            'label' => $this->page_title,
+            'description' => $this->page_description,
+        ];
+        return $apps_list;
     }
+
 }
 Zume_Coaching_Checklist_Tile::instance();
