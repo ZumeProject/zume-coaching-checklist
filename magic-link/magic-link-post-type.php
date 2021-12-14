@@ -13,8 +13,11 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
     public $page_description = 'Zúme personal coaching checklist.';
     public $root = "zume_app";
     public $type = 'coaching_checklist';
+    public $type_name = 'Zúme Coaching Checklist';
     public $post_type = 'contacts';
-    private $meta_key = '';
+    private $meta_key;
+    public $show_bulk_send = true; // enables bulk send of magic links from list page
+    public $show_app_tile = true; // enables app tile sharing features
 
     private static $_instance = null;
     public static function instance() {
@@ -32,7 +35,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
          * post type and module section
          */
         add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
-        add_filter( 'dt_settings_apps_list', [ $this, 'dt_settings_apps_list' ], 10, 1 );
+//        add_filter( 'dt_settings_apps_list', [ $this, 'dt_settings_apps_list' ], 10, 1 );
 
         /**
          * tests if other URL
