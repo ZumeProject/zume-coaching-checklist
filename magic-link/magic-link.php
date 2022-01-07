@@ -7,9 +7,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
  */
 class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
 
-    public $magic = false;
-    public $parts = false;
-    public $page_title = 'Zúme Coaching Checklist';
+    public $page_title = 'Coaching Checklist';
     public $page_description = 'Zúme personal coaching checklist.';
     public $root = "zume_app";
     public $type = 'coaching_checklist';
@@ -35,7 +33,6 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
          * post type and module section
          */
         add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
-//        add_filter( 'dt_settings_apps_list', [ $this, 'dt_settings_apps_list' ], 10, 1 );
 
         /**
          * tests if other URL
@@ -79,19 +76,6 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 padding: 1em;
             }
         </style>
-        <?php
-    }
-
-    /**
-     * Writes javascript to the header
-     *
-     * @see DT_Magic_Url_Base()->header_javascript() for default state
-     */
-    public function header_javascript(){
-        ?>
-        <script>
-            // console.log('insert header_javascript')
-        </script>
         <?php
     }
 
