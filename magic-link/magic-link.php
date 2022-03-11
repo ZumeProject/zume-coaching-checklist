@@ -95,7 +95,7 @@ class Zume_Coaching_Checklist_Magic_Link extends DT_Magic_Url_Base {
                 'nonce' => wp_create_nonce( 'wp_rest' ),
                 'parts' => $this->parts,
                 'translations' => [
-                    'add' => __( 'Add Magic', 'disciple-tools-plugin-starter-template' ),
+                    'add' => __( 'Add Magic', 'zume-coaching-checklist' ),
                 ],
             ]) ?>][0]
 
