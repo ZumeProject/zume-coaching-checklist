@@ -361,7 +361,7 @@ msgstr "Buscar usuários"
 #: post-type/module-base.php:601
 msgctxt "Search 'something'"
 msgid "Search %s"
-msgstr "Pesquisa% s"
+msgstr "Pesquis %s"
 
 #: post-type/module-base.php:657
 msgid "Create"
@@ -391,15 +391,15 @@ msgstr "Fechar"
 
 #: post-type/module-base.php:880
 msgid "Removed %1$s: %2$s"
-msgstr "Removido% 1 $ s:% 2 $ s"
+msgstr "Removido %1$s: %2$s"
 
 #: post-type/module-base.php:883
 msgid "Added %1$s: %2$s"
-msgstr "Adicionado% 1 $ s:% 2 $ s"
+msgstr "Adicionado %1$s: %2$s"
 
 #: post-type/module-base.php:886
 msgid "Updated %1$s: %2$s to %3$s"
-msgstr "Atualizado% 1 $ s:% 2 $ s para% 3 $ s"
+msgstr "Atualizado %1$s: %2$s para %3$s"
 
 #: post-type/module-base.php:958
 #: post-type/module-base.php:942
@@ -1142,19 +1142,19 @@ msgstr "Gerações de equipe"
 
 #: logging/log-generations.php:76
 msgid "%s is reporting a new pre-group generation."
-msgstr "% s está relatando uma nova geração de pré-grupo."
+msgstr "%s está relatando uma nova geração de pré-grupo."
 
 #: logging/log-generations.php:81
 msgid "%s is reporting a new group generation."
-msgstr "% s está relatando uma nova geração de grupo."
+msgstr "%s está relatando uma nova geração de grupo."
 
 #: logging/log-generations.php:86
 msgid "%s is reporting a new church generation."
-msgstr "% s está relatando uma nova geração da igreja."
+msgstr "%s está relatando uma nova geração da igreja."
 
 #: logging/log-generations.php:91
 msgid "%s is reporting a new leadership team generation."
-msgstr "% s está relatando uma nova geração de equipe de liderança."
+msgstr "%s está relatando uma nova geração de equipe de liderança."
 
 #: includes/charts/baptisms.php:81
 msgid "New Contact"
@@ -1186,31 +1186,31 @@ msgstr "Novo Coaching"
 
 #: logging/log-new-posts.php:164
 msgid "%s is reporting a new contact."
-msgstr "% s está relatando um novo contato."
+msgstr "%s está relatando um novo contato."
 
 #: logging/log-new-posts.php:169
 msgid "%s is reporting a new pre-group formed."
-msgstr "% s está relatando um novo pré-grupo formado."
+msgstr "%s está relatando um novo pré-grupo formado."
 
 #: logging/log-new-posts.php:174
 msgid "%s is reporting a new group formed."
-msgstr "% s está relatando a formação de um novo grupo."
+msgstr "%s está relatando a formação de um novo grupo."
 
 #: logging/log-new-posts.php:179
 msgid "%s is reporting a new church."
-msgstr "% s está relatando uma nova igreja."
+msgstr "%s está relatando uma nova igreja."
 
 #: logging/log-new-posts.php:184
 msgid "%s is reporting a new leadership team formed."
-msgstr "% s está relatando uma nova equipe de liderança formada."
+msgstr "%s está relatando uma nova equipe de liderança formada."
 
 #: logging/log-new-posts.php:189
 msgid "%s is reporting a new baptism."
-msgstr "% s está relatando um novo batismo."
+msgstr "%s está relatando um novo batismo."
 
 #: logging/log-new-posts.php:194
 msgid "%s is reporting an coaching relationship."
-msgstr "% s está relatando um relacionamento de coaching."
+msgstr "%s está relatando um relacionamento de coaching."
 
 #: metrics/network-maps-area.php:74
 #: metrics/network-maps-area.php:83
@@ -1264,7 +1264,7 @@ msgstr "O plugin 'Disciple Tools - Training' requer o tema 'Disciple Tools' para
 
 #: disciple-tools-training.php:299
 msgid "Current Disciple Tools version: %1$s, required version: %2$s"
-msgstr "Versão atual do Disciple Tools:% 1 $ s, versão necessária:% 2 $ s"
+msgstr "Versão atual do Disciple Tools: %1$s, versão necessária: %2$s"
 
 #. Plugin URI of the plugin/theme
 #: 
@@ -1314,7 +1314,7 @@ msgstr "painel de controle"
 
 #: includes/rest-api.php:86
 msgid "%s days since last update"
-msgstr "% s dias desde a última atualização"
+msgstr "%s dias desde a última atualização"
 
 #: includes/rest-api.php:419
 msgid "Accept"
